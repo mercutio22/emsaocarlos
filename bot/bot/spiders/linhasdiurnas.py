@@ -30,7 +30,7 @@ class AthenasLinhas(CrawlSpider):
 			#TODO: Deveria manter o contexto e retornar os dados da proxima pagina
 			#      mas o que parece eh que nao esta retornando
 			request = Request(link, callback=self.parse_item)
-			pdb.set_trace()
+			#pdb.set_trace()
 
 			#loader.add_value('ida', request.meta['ida'])
 			#loader.add_value('volta', request.meta['volta'])
