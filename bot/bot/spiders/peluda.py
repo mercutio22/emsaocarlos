@@ -26,15 +26,59 @@ class PeludaSpider(CrawlSpider):
 
 	def parse_mainpage(self, response):
 		""" Parses the website containing the  itineraries
-		itineraries = dictionary of the type busline: (departure, arrival)
+		itineraries = dictionary of the type pk: (busline, departure, arrival).
+		pk stands for primary key. 
+		(Surprisingly busline numbers are not unique thus can't be used)
+		Uses parse_item as callback for each weblink containing busline 
+		routes and yields the respective LinhaItems.
 		"""
 		
 		hxs = HtmlXPathSelector(response)
 		itineraries = {}
 		
-		buslines = hxs.select('//td[contains(width, "56")]')
+		buslines = hxs.select('//td[contains(@width, "56")]')
 		buslines = buslines.select('./p/b/span/text()').extract()
-		for i in buslines:
+		buslinefilter = re.compile('\d\d\d\d')
+		buslines = filter(buslinefilter.search, buslines)
+					
+		departures = hxs.select('//td[contains(@width, "52")]')
+		departures = departures.select('./p/span/text()').extract()
+		timefilter =  re.compile('\d\d:\d\d', re.IGNORECASE)
+		departures = filter(timefilter.search, departures)
+		departures.append('-') #the last 5871 busline has an undefined departure time!
+
+		arrivals = hxs.select('//td[contains(@width, "50")]')
+		arrivals = arrivals.select('./p/span/text()').extract()
+		arrivals = filter(timefilter.search, arrivals)
+		
+		assert len(arrivals) == len(departures) == len(buslines), "Not the same ammount of buslines, departures or arrivals"
+
+	    index = 0
+	    while index < len(arrivals):
+			intineraries[counter] = (index,
+									busline[index],
+									departures[index],
+									arrivals[index])
+									
+		
+		
+		
+		
+	    
+	    
+	    
+	    
+	    
+	   
+
+	   
+	   
+	   
+	   
+		
+		
+				
+		
 			
 		 
 		
