@@ -6,11 +6,13 @@
 from scrapy.item import Item, Field
 
 class LinhaItem(Item):
-	linha 	 = Field()
-	link     = Field()
-	nome 	 = Field()
-	origem   = Field()
-	destino  = Field()
-	via      = Field()
-	ida      = Field()
-	volta    = Field()
+    linha 	 = Field()
+    link     = Field()
+    nome 	 = Field()
+    origem   = Field()
+    destino  = Field()
+    via      = Field()
+    ida      = Field()
+    volta    = Field()
+    mpartida = Field() # momento da partida
+    mchegada = Field() # momento da chegada
